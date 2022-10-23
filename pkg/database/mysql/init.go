@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/url"
+	"os"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -15,11 +16,19 @@ func InitMysqlDB() *sql.DB {
 		dbConn   *sql.DB
 	)
 
+	// fmt.Printf("environment = %s \n", os.Getenv("DB_PORT"))
+
 	dbHost := "localhost"
 	dbPort := "3306"
 	dbUser := "root"
 	dbPass := ""
-	dbName := "go_rest"
+	dbName := os.Getenv("DB_DATABASE")
+
+	// dbHost := os.Getenv("DB_HOST")
+	// dbPort := os.Getenv("DB_PORT")
+	// dbUser := os.Getenv("DB_USERNAME")
+	// dbPass := os.Getenv("DB_PASSWORD")
+	// dbName := os.Getenv("DB_DATABASE")
 
 	//root:@tcp(localhost:3306)/db_salt_academy
 	connection := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPass, dbHost, dbPort, dbName)

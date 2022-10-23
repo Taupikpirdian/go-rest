@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"os"
 	"try/go-rest/handler/student_handler"
 	"try/go-rest/pkg/database/mysql"
 	"try/go-rest/pkg/redis"
@@ -20,10 +21,27 @@ var (
 	ctx         = context.Background()
 )
 
+func env() {
+	// set env variable using os package
+	os.Setenv("APP_NAME", "GO REST STUDENT")
+	os.Setenv("APP_ENV", "local")
+	os.Setenv("API_KEY", "base64:qIub0xvzVezh+GaRKZQbd3krXge6AnnLghLVvMBbyFM=")
+
+	os.Setenv("DB_CONNECTION", "mysql")
+	os.Setenv("DB_HOST", "127.0.0.1")
+	os.Setenv("DB_PORT", "3306")
+	os.Setenv("DB_DATABASE", "go_rest")
+	os.Setenv("DB_USERNAME", "root")
+	os.Setenv("DB_PASSWORD", "")
+}
+
 func main() {
 	/*
 		DETAIL APLIKASI ADA PADA FILE README.md
 	*/
+	// os package
+	env()
+
 	r := mux.NewRouter()
 
 	// routes student
