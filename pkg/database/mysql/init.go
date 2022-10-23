@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"net/url"
-	"os"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -22,7 +21,7 @@ func InitMysqlDB() *sql.DB {
 	dbPort := "3306"
 	dbUser := "root"
 	dbPass := ""
-	dbName := os.Getenv("DB_DATABASE")
+	dbName := "go_rest"
 
 	// dbHost := os.Getenv("DB_HOST")
 	// dbPort := os.Getenv("DB_PORT")
