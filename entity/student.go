@@ -70,17 +70,7 @@ func NewStudent(dto DTOStudent) (*Student, error) {
 		return nil, errors.New("FAKULTAS TIDAK BOLEH KOSONG")
 	}
 
-	if dto.CreatedAt == "" {
-		return nil, errors.New("CREATED AT TIDAK BOLEH KOSONG")
-	}
-
-	if dto.UpdatedAt == "" {
-		return nil, errors.New("UPDATED AT TIDAK BOLEH KOSONG")
-	}
-
 	strDob, _ := time.Parse("2006-01-02", dto.Dob)
-	strCreatedAt, _ := time.Parse("2006-01-02", dto.CreatedAt)
-	strUpdatedAt, _ := time.Parse("2006-01-02", dto.UpdatedAt)
 
 	student := &Student{
 		nim:           dto.Nim,
@@ -91,8 +81,8 @@ func NewStudent(dto DTOStudent) (*Student, error) {
 		jenjang:       dto.Jenjang,
 		study_program: dto.StudyProgram,
 		faculty:       dto.Faculty,
-		created_at:    strCreatedAt,
-		updated_at:    strUpdatedAt,
+		created_at:    generateTime(),
+		updated_at:    generateTime(),
 	}
 
 	return student, nil
@@ -139,4 +129,9 @@ func (s *Student) GetCreatedAt() string {
 
 func (s *Student) GetUpdatedAt() string {
 	return s.updated_at.Format("2006-01-02")
+}
+
+func generateTime() time.Time {
+	data := time.Now()
+	return data
 }

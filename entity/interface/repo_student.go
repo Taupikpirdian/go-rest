@@ -7,4 +7,5 @@ import (
 
 type InterfaceRepoStudent interface {
 	InsertDataStudent(ctx context.Context, dataStudent *entity.Student) error
+	CheckDataStudentByNim(ctx context.Context, nim string) (bool, error)
 }

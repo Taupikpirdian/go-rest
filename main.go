@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"try/go-rest/handler/student_handler"
 	"try/go-rest/pkg/database/mysql"
@@ -20,12 +21,15 @@ var (
 )
 
 func main() {
+	/*
+		DETAIL APLIKASI ADA PADA FILE README.md
+	*/
 	r := mux.NewRouter()
 
-	/*
-		routes student
-	*/
+	// routes student
 	handlerStudent := student_handler.NewStudentHandler(ctx, repoStudent)
-	r.HandleFunc("/create-student", handlerStudent.StoreDataBuku).Methods(http.MethodPost)
+	r.HandleFunc("/store-student", handlerStudent.StoreDataBuku).Methods(http.MethodPost)
 
+	fmt.Println("localhost:8080")
+	http.ListenAndServe(":8080", r)
 }
