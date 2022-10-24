@@ -8,6 +8,7 @@ import (
 	"time"
 	"try/go-rest/entity"
 	"try/go-rest/models"
+	"try/go-rest/repository/mysql/mapper"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/rocketlaunchr/dbq/v2"
@@ -69,4 +70,65 @@ func (s *StudentMysqlInteractor) CheckDataStudentByNim(ctx context.Context, nim 
 	} else {
 		return false, errors.New("DATA STUDENT SUDAH ADA DALAM DATABASE")
 	}
+}
+
+func (b *StudentMysqlInteractor) ListDataStudent(ctx context.Context) ([]*entity.Student, error) {
+	var (
+		errMysql error
+	)
+
+	ctx, cancel := context.WithTimeout(ctx, 2*time.Second)
+
+	defer cancel()
+
+	sqlQuery := "SELECT * FROM students"
+	rows, errMysql := b.db.QueryContext(ctx, sqlQuery)
+	if errMysql != nil {
+		return nil, errMysql
+	}
+
+	dataStudentCollection := make([]*entity.Student, 0)
+	for rows.Next() {
+		var (
+			id            int
+			nim           string
+			name          string
+			gender        string
+			dob           string
+			pob           string
+			jenjang       string
+			study_program string
+			faculty       string
+			created_at    string
+			updated_at    string
+		)
+
+		err := rows.Scan(&id, &nim, &name, &gender, &dob, &pob, &jenjang, &study_program, &faculty, &created_at, &updated_at)
+		if err != nil {
+			return nil, err
+		}
+
+		dataStudent, errMapper := mapper.DataStudentDbToEntity(entity.DTOStudent{
+			Id:           id,
+			Nim:          nim,
+			Name:         name,
+			Gender:       gender,
+			Dob:          dob,
+			Pob:          pob,
+			Jenjang:      jenjang,
+			StudyProgram: study_program,
+			Faculty:      faculty,
+			CreatedAt:    created_at,
+			UpdatedAt:    updated_at,
+		})
+
+		if errMapper != nil {
+			return nil, errMapper
+		}
+
+		dataStudentCollection = append(dataStudentCollection, dataStudent)
+	}
+	defer rows.Close()
+
+	return dataStudentCollection, nil
 }

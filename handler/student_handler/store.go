@@ -8,7 +8,7 @@ import (
 	"try/go-rest/http_request"
 )
 
-func (s_handler *StudentHandler) StoreDataBuku(w http.ResponseWriter, r *http.Request) {
+func (s_handler *StudentHandler) StoreDataStudent(w http.ResponseWriter, r *http.Request) {
 	var (
 		req     http_request.RequestStudent
 		decoder = json.NewDecoder(r.Body)

@@ -88,6 +88,62 @@ func NewStudent(dto DTOStudent) (*Student, error) {
 	return student, nil
 }
 
+func CollectStudent(dto DTOStudent) (*Student, error) {
+	if dto.Nim == "" {
+		return nil, errors.New("NIM TIDAK BOLEH KOSONG")
+	}
+
+	if dto.Name == "" {
+		return nil, errors.New("NAMA TIDAK BOLEH KOSONG")
+	}
+
+	if dto.Gender == "" {
+		return nil, errors.New("GENDER TIDAK BOLEH KOSONG")
+	}
+
+	if dto.Dob == "" {
+		return nil, errors.New("TANGGAL TIDAK BOLEH KOSONG")
+	}
+
+	if dto.Pob == "" {
+		return nil, errors.New("POB TIDAK BOLEH KOSONG")
+	}
+
+	if dto.Jenjang == "" {
+		return nil, errors.New("JENJANG TIDAK BOLEH KOSONG")
+	}
+
+	if dto.StudyProgram == "" {
+		return nil, errors.New("PRODI TIDAK BOLEH KOSONG")
+	}
+
+	if dto.Faculty == "" {
+		return nil, errors.New("FAKULTAS TIDAK BOLEH KOSONG")
+	}
+
+	/*
+		#error_sumber: convert jadi data 0001-01-01
+	*/
+	strDob, _ := time.Parse("2006-01-02", dto.Dob)
+	strCreatedAt, _ := time.Parse("2006-01-02 15:04:05", dto.CreatedAt)
+	strUpdatedAt, _ := time.Parse("2006-01-02 15:04:05", dto.UpdatedAt)
+
+	student := &Student{
+		nim:           dto.Nim,
+		name:          dto.Name,
+		gender:        dto.Gender,
+		dob:           strDob,
+		pob:           dto.Pob,
+		jenjang:       dto.Jenjang,
+		study_program: dto.StudyProgram,
+		faculty:       dto.Faculty,
+		created_at:    strCreatedAt,
+		updated_at:    strUpdatedAt,
+	}
+
+	return student, nil
+}
+
 /*
 	func getter
 */

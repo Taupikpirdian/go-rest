@@ -25,3 +25,12 @@ func StudenModelToEntity(model *models.ModelStudent) (*entity.Student, error) {
 
 	return student, nil
 }
+
+func DataStudentDbToEntity(dataDTO entity.DTOStudent) (*entity.Student, error) {
+	student, err := entity.CollectStudent(dataDTO)
+	if err != nil {
+		return nil, err
+	}
+
+	return student, nil
+}

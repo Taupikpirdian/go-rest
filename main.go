@@ -46,7 +46,8 @@ func main() {
 
 	// routes student
 	handlerStudent := student_handler.NewStudentHandler(ctx, repoStudent)
-	r.HandleFunc("/store-student", handlerStudent.StoreDataBuku).Methods(http.MethodPost)
+	r.HandleFunc("/list-student", handlerStudent.IndexDataStudent).Methods(http.MethodGet)
+	r.HandleFunc("/store-student", handlerStudent.StoreDataStudent).Methods(http.MethodPost)
 
 	fmt.Println("localhost:8080")
 	http.ListenAndServe(":8080", r)
