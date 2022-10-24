@@ -132,3 +132,38 @@ func (b *StudentMysqlInteractor) ListDataStudent(ctx context.Context) ([]*entity
 
 	return dataStudentCollection, nil
 }
+
+func (s *StudentMysqlInteractor) GetStudentByNim(ctx context.Context, nim string) (*entity.Student, error) {
+	ctx, cancel := context.WithTimeout(ctx, 2*time.Second)
+	defer cancel()
+
+	queryStudent := fmt.Sprintf("SELECT * FROM %s WHERE nim = ?", models.GetStudentTableName())
+
+	opts := &dbq.Options{
+		SingleResult:   true,
+		ConcreteStruct: models.ModelStudent{},
+		DecoderConfig:  dbq.StdTimeConversionConfig(),
+	}
+
+	resultBuku, err := dbq.Q(ctx, s.db, queryStudent, opts, nim)
+	/*
+		#bugs, dari modelnya sudah tidak ada data prodi
+	*/
+	fmt.Println(resultBuku)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if resultBuku == nil {
+		return nil, errors.New("STUDENT TIDAK DITEMUKAN")
+	}
+
+	student, errMap := mapper.StudenModelToEntity(resultBuku.(*models.ModelStudent))
+
+	if errMap != nil {
+		return nil, errMap
+	}
+
+	return student, nil
+}

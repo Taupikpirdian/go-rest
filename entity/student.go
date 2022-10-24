@@ -122,7 +122,7 @@ func CollectStudent(dto DTOStudent) (*Student, error) {
 	}
 
 	/*
-		#error_sumber: convert jadi data 0001-01-01
+		#bugs: convert jadi data 0001-01-01
 	*/
 	strDob, _ := time.Parse("2006-01-02", dto.Dob)
 	strCreatedAt, _ := time.Parse("2006-01-02 15:04:05", dto.CreatedAt)

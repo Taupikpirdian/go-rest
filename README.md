@@ -35,3 +35,9 @@
     "study_program": "Teknik Informatika",
     "faculty": "Teknik"
 }'
+
+[TAGS]
+- #bugs: bugs line marker 
+- #ask: question line marker
+- #solved: solved line marker
+- #answered: answered line marker
