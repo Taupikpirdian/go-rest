@@ -15,13 +15,14 @@ import (
 )
 
 var (
+	_           = setEnvironment()
 	mysqlConn   = mysql.InitMysqlDB()
 	redisClient = redis.InitRedisClient()
 	repoStudent = repo.NewStudnetMysql(mysqlConn, redisClient)
 	ctx         = context.Background()
 )
 
-func env() {
+func setEnvironment() bool {
 	// set env variable using os package
 	os.Setenv("APP_NAME", "GO REST STUDENT")
 	os.Setenv("APP_ENV", "local")
@@ -33,6 +34,8 @@ func env() {
 	os.Setenv("DB_DATABASE", "go_rest")
 	os.Setenv("DB_USERNAME", "root")
 	os.Setenv("DB_PASSWORD", "")
+
+	return true
 }
 
 func main() {
@@ -40,8 +43,6 @@ func main() {
 		DETAIL APLIKASI ADA PADA FILE README.md
 	*/
 	// os package
-	env()
-
 	r := mux.NewRouter()
 
 	// routes student
