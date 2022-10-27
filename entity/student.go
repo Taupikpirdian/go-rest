@@ -71,6 +71,15 @@ func NewStudent(dto DTOStudent) (*Student, error) {
 	}
 
 	strDob, _ := time.Parse("2006-01-02", dto.Dob)
+	created_at := generateTime()
+	updated_at := generateTime()
+
+	if dto.CreatedAt != "" {
+		created_at, _ = time.Parse("2006-01-02 15:04:05", dto.CreatedAt)
+	}
+	if dto.UpdatedAt != "" {
+		updated_at, _ = time.Parse("2006-01-02 15:04:05", dto.UpdatedAt)
+	}
 
 	student := &Student{
 		nim:           dto.Nim,
@@ -81,8 +90,8 @@ func NewStudent(dto DTOStudent) (*Student, error) {
 		jenjang:       dto.Jenjang,
 		study_program: dto.StudyProgram,
 		faculty:       dto.Faculty,
-		created_at:    generateTime(),
-		updated_at:    generateTime(),
+		created_at:    created_at,
+		updated_at:    updated_at,
 	}
 
 	return student, nil

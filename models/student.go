@@ -1,16 +1,19 @@
 package models
 
+import "time"
+
 type ModelStudent struct {
-	Nim          string `json:"nim"`
-	Name         string `json:"name"`
-	Gender       string `json:"gender"`
-	Dob          string `json:"dob"`
-	Pob          string `json:"pob"`
-	Jenjang      string `json:"jenjang"`
-	StudyProgram string `json:"study_program"`
-	Faculty      string `json:"faculty"`
-	CreatedAt    string `json:"created_at"`
-	UpdatedAt    string `json:"updated_at"`
+	Id           string    `dbq:"id"`
+	Nim          string    `dbq:"nim"`
+	Name         string    `dbq:"name"`
+	Gender       string    `dbq:"gender"`
+	Dob          time.Time `dbq:"dob"`
+	Pob          string    `dbq:"pob"`
+	Jenjang      string    `dbq:"jenjang"`
+	StudyProgram string    `dbq:"study_program"`
+	Faculty      string    `dbq:"faculty"`
+	CreatedAt    time.Time `dbq:"created_at"`
+	UpdatedAt    time.Time `dbq:"updated_at"`
 }
 
 func GetStudentTableName() string {
@@ -19,6 +22,7 @@ func GetStudentTableName() string {
 
 func GetStudentFillableTable() []string {
 	return []string{
+		"id",
 		"nim",
 		"name",
 		"gender",

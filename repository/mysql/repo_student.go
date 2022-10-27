@@ -146,10 +146,6 @@ func (s *StudentMysqlInteractor) GetStudentByNim(ctx context.Context, nim string
 	}
 
 	resultBuku, err := dbq.Q(ctx, s.db, queryStudent, opts, nim)
-	/*
-		#bugs, dari modelnya sudah tidak ada data prodi
-	*/
-	fmt.Println(resultBuku)
 
 	if err != nil {
 		return nil, err
@@ -164,6 +160,5 @@ func (s *StudentMysqlInteractor) GetStudentByNim(ctx context.Context, nim string
 	if errMap != nil {
 		return nil, errMap
 	}
-
 	return student, nil
 }

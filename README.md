@@ -41,3 +41,8 @@
 - #ask: question line marker
 - #solved: solved line marker
 - #answered: answered line marker
+
+[TEAM]
+- Taupik
+- Yogi
+- Rico
