@@ -2,8 +2,11 @@ package mapper
 
 import (
 	"fmt"
+	"time"
 	"try/go-rest/entity"
 	"try/go-rest/models"
+
+	"github.com/rocketlaunchr/dbq/v2"
 )
 
 func StudenModelToEntity(model *models.ModelStudent) (*entity.Student, error) {
@@ -35,4 +38,24 @@ func DataStudentDbToEntity(dataDTO entity.DTOStudent) (*entity.Student, error) {
 	}
 
 	return student, nil
+}
+
+func StudentEntityToModel(student *entity.Student) *models.ModelStudent {
+	date, _ := time.Parse("2006-01-02", student.GetDob())
+
+	return &models.ModelStudent{
+		Nim:          student.GetNim(),
+		Name:         student.GetName(),
+		Gender:       student.GetGender(),
+		Dob:          date,
+		Pob:          student.GetPob(),
+		Jenjang:      student.GetJenjang(),
+		StudyProgram: student.GetStudyProgram(),
+		Faculty:      student.GetFaculty(),
+	}
+}
+
+func StudentEntityToDbqStruct(student *entity.Student) []interface{} {
+	dbqStruct := dbq.Struct(StudentEntityToModel(student))
+	return dbqStruct
 }

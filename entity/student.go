@@ -3,6 +3,7 @@ package entity
 import (
 	"errors"
 	"time"
+	"try/go-rest/http_request"
 )
 
 type Student struct {
@@ -151,6 +152,34 @@ func CollectStudent(dto DTOStudent) (*Student, error) {
 	}
 
 	return student, nil
+}
+
+func (s *Student) SetUpdateData(req http_request.RequestStudent) {
+	if req.Nim != "" {
+		s.nim = req.Nim
+	}
+	if req.Name != "" {
+		s.name = req.Name
+	}
+	if req.Gender != "" {
+		s.gender = req.Gender
+	}
+	if req.Dob != "" {
+		timeStr, _ := time.Parse("2006-01-02", req.Dob)
+		s.dob = timeStr
+	}
+	if req.Pob != "" {
+		s.pob = req.Pob
+	}
+	if req.Jenjang != "" {
+		s.jenjang = req.Jenjang
+	}
+	if req.StudyProgram != "" {
+		s.study_program = req.StudyProgram
+	}
+	if req.Faculty != "" {
+		s.faculty = req.Faculty
+	}
 }
 
 /*

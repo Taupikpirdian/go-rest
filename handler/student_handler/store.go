@@ -10,17 +10,17 @@ import (
 )
 
 func (s_handler *StudentHandler) StoreDataStudent(w http.ResponseWriter, r *http.Request) {
-	var (
-		req     http_request.RequestStudent
-		decoder = json.NewDecoder(r.Body)
-	)
-
 	token := r.Header.Get("api-key")
 	if token != os.Getenv("API_KEY") {
 		w.WriteHeader(http.StatusUnauthorized)
 		w.Write([]byte("Not Authorization"))
 		return
 	}
+
+	var (
+		req     http_request.RequestStudent
+		decoder = json.NewDecoder(r.Body)
+	)
 
 	errDecode := decoder.Decode(&req)
 	if errDecode != nil {

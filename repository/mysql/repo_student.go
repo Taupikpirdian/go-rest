@@ -177,3 +177,19 @@ func (s *StudentMysqlInteractor) DeleteDataStudentByNim(ctx context.Context, nim
 
 	return nil
 }
+
+func (s *StudentMysqlInteractor) UpdateStudentByNim(ctx context.Context, dataStudent *entity.Student, nim string) error {
+	ctx, cancel := context.WithTimeout(ctx, 2*time.Second)
+	defer cancel()
+
+	query := fmt.Sprintf("UPDATE %s SET nim = ?, name = ?, gender = ?, dob = ?, pob = ?, jenjang = ?, study_program = ?, faculty = ?, created_at = ?, updated_at = ? "+
+		"WHERE nim = '%s'", models.GetStudentTableName(), nim)
+
+	_, err := dbq.E(ctx, s.db, query, nil, mapper.StudentEntityToDbqStruct(dataStudent))
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

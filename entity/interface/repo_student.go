@@ -10,5 +10,6 @@ type InterfaceRepoStudent interface {
 	CheckDataStudentByNim(ctx context.Context, nim string) (bool, error)
 	ListDataStudent(ctx context.Context) ([]*entity.Student, error)
 	GetStudentByNim(ctx context.Context, nim string) (*entity.Student, error)
+	UpdateStudentByNim(ctx context.Context, dataBuku *entity.Student, kodeBuku string) error
 	DeleteDataStudentByNim(ctx context.Context, nim string) error
 }

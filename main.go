@@ -50,6 +50,7 @@ func main() {
 	r.HandleFunc("/list-student", handlerStudent.IndexDataStudent).Methods(http.MethodGet)
 	r.HandleFunc("/store-student", handlerStudent.StoreDataStudent).Methods(http.MethodPost)
 	r.HandleFunc("/student/{nim}", handlerStudent.GetStudentByNim).Methods(http.MethodGet)
+	r.HandleFunc("/update/{nim}", handlerStudent.UpdateDataStudent).Methods(http.MethodPut)
 	r.HandleFunc("/destroy/{nim}", handlerStudent.DestroyDataStudent).Methods(http.MethodDelete)
 
 	fmt.Println("localhost:8080")
