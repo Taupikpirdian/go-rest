@@ -145,20 +145,35 @@ func (s *StudentMysqlInteractor) GetStudentByNim(ctx context.Context, nim string
 		DecoderConfig:  dbq.StdTimeConversionConfig(),
 	}
 
-	resultBuku, err := dbq.Q(ctx, s.db, queryStudent, opts, nim)
+	resultStudent, err := dbq.Q(ctx, s.db, queryStudent, opts, nim)
 
 	if err != nil {
 		return nil, err
 	}
 
-	if resultBuku == nil {
+	if resultStudent == nil {
 		return nil, errors.New("STUDENT TIDAK DITEMUKAN")
 	}
 
-	student, errMap := mapper.StudenModelToEntity(resultBuku.(*models.ModelStudent))
+	student, errMap := mapper.StudenModelToEntity(resultStudent.(*models.ModelStudent))
 
 	if errMap != nil {
 		return nil, errMap
 	}
 	return student, nil
+}
+
+func (s *StudentMysqlInteractor) DeleteDataStudentByNim(ctx context.Context, nim string) error {
+	ctx, cancel := context.WithTimeout(ctx, 2*time.Second)
+	defer cancel()
+
+	query := fmt.Sprintf("DELETE FROM %s WHERE nim = ?", models.GetStudentTableName())
+
+	_, err := dbq.E(ctx, s.db, query, nil, nim)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
