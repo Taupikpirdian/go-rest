@@ -94,13 +94,13 @@ func (b *StudentMysqlInteractor) ListDataStudent(ctx context.Context) ([]*entity
 			nim           string
 			name          string
 			gender        string
-			dob           string
+			dob           time.Time
 			pob           string
 			jenjang       string
 			study_program string
 			faculty       string
-			created_at    string
-			updated_at    string
+			created_at    time.Time
+			updated_at    time.Time
 		)
 
 		err := rows.Scan(&id, &nim, &name, &gender, &dob, &pob, &jenjang, &study_program, &faculty, &created_at, &updated_at)
@@ -113,13 +113,13 @@ func (b *StudentMysqlInteractor) ListDataStudent(ctx context.Context) ([]*entity
 			Nim:          nim,
 			Name:         name,
 			Gender:       gender,
-			Dob:          dob,
+			Dob:          dob.Format("2006-01-02"),
 			Pob:          pob,
 			Jenjang:      jenjang,
 			StudyProgram: study_program,
 			Faculty:      faculty,
-			CreatedAt:    created_at,
-			UpdatedAt:    updated_at,
+			CreatedAt:    created_at.Format("2006-01-02 15:04:05"),
+			UpdatedAt:    updated_at.Format("2006-01-02 15:04:05"),
 		})
 
 		if errMapper != nil {

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 	"try/go-rest/entity"
 	"try/go-rest/http_request"
 )
@@ -13,6 +14,13 @@ func (s_handler *StudentHandler) StoreDataStudent(w http.ResponseWriter, r *http
 		req     http_request.RequestStudent
 		decoder = json.NewDecoder(r.Body)
 	)
+
+	token := r.Header.Get("api-key")
+	if token != os.Getenv("API_KEY") {
+		w.WriteHeader(http.StatusUnauthorized)
+		w.Write([]byte("Not Authorization"))
+		return
+	}
 
 	errDecode := decoder.Decode(&req)
 	if errDecode != nil {
